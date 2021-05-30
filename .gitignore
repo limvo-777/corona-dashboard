@@ -1,0 +1,8 @@
+.ipynb_checkpoints/
+.vscode/
+bin/
+etc/
+include/
+lib/
+lib64/
+share/
