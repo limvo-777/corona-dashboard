@@ -10,7 +10,7 @@ totals_df = totals_df.rename(columns={'index':"condition"})
 
 # Group by Country name : 나라별 확진자
 countries_df = daily_df[["Country_Region","Confirmed","Deaths","Recovered"]]
-countries_df =countries_df.groupby("Country_Region").sum().reset_index()
+countries_df =countries_df.groupby("Country_Region").sum().sort_values(by="Confirmed",ascending=False).reset_index()
 
 # Daily Cases Globally : 일자별 확진자
 # table of corona data sort by time
