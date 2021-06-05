@@ -11,6 +11,7 @@ import dash_core_components as dcc
 from dash.dependencies import Input, Output
 
 #plotly : 오픈 소스 graphic 라이브러리 
+#plotly와 plotly express의 차이점 : px는 그래프에서 많은 환경설정을 하는것에 적합하지 않음
 import plotly.express as px
 
 #data 가져오기
@@ -40,7 +41,7 @@ bubble_map = px.scatter_geo(countries_df,locations="Country_Region",locationmode
                      })
 
 #config map layout
-bubble_map.update_layout(margin=dict(l=0,r=0,t=30,b=0))
+bubble_map.update_layout(margin=dict(l=0,r=0,t=30,b=0), coloraxis_colorbar=dict(xanchor="left",x=0))
 
 # total bar chart
 bars_graph = px.bar(totals_df,x="condition",y="count",
@@ -91,9 +92,16 @@ app.layout = html.Div(
                 #bar chart
                 html.Div(children=[dcc.Graph(figure=bars_graph)]),
                 html.Div(
+                    style={"grid-column":"span 3"},
                     children=[
                         # Dropdown menu 생성
-                        dcc.Dropdown(id="country",
+                        dcc.Dropdown(
+                            style={
+                                "width":320,
+                                "margin":"0 auto",
+                                "color":"#111111"
+                            },
+                            id="country",
                             options=[                            
                                 {"label":country,"value":country}
                                 for country in dropdown_options                                
@@ -116,7 +124,11 @@ app.layout = html.Div(
 )
 
 def update_hello(value):
-    df=make_global_df()
+    if value :
+        df=make_country_df(value)
+    else:
+        df=make_global_df()
+    
     #line chart
     fig = px.line(df,x="date",y=["confirmed","deaths","recovered"],
                 template='plotly_dark',

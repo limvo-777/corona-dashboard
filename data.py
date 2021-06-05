@@ -40,7 +40,7 @@ def make_global_df():
 # table of corona data sort by time
 def make_country_df(country):
     def make_df(condition):
-        df = pd.read_csv("data/time_confirmed.csv")
+        df = pd.read_csv(f"data/time_{condition}.csv")
         df = df.loc[df["Country/Region"]==country]
         df = df.drop(columns=["Province/State","Country/Region","Lat","Long"]).sum().reset_index(name=condition)
         df = df .rename(columns={'index':'date'})
