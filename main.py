@@ -1,9 +1,15 @@
 #dash : python 코드로 react application을 만들어 줌 (interactive)
 import dash
-import dash_core_components as dcc
 
-#html component 사용할 수 있게 해줌
+#html component 사용할 수 있게 해줌 (dash의 첫번째 기능)
 import dash_html_components as html
+
+#dashboard를 interactive 하게 만들어줌 react.js 같이 (dash의 두번째 기능)
+#callback을 통한 데이터 가져오기가 필요
+import dash_core_components as dcc
+#callback input,output for interactive
+from dash.dependencies import Input, Output
+
 #plotly : 오픈 소스 graphic 라이브러리 
 import plotly.express as px
 
@@ -11,8 +17,6 @@ import plotly.express as px
 from data import *
 #make table 함수 불러오기
 from builders import make_table
-
-print(countries_df.values)
 
 # reset css cdn 
 # CDN(Content Delivery Network) : 글로벌 서비스는 여러 hop을 거쳐야해 전송속도가 느림
@@ -83,13 +87,36 @@ app.layout = html.Div(
         ),
         html.Div(
             style={"display":"grid","gridTemplateColumns":"repeat(4,1fr)","gap":50},
-            children=[dcc.Graph(figure=bars_graph)]
-        )
-        ]
-)
+            children=[
+                html.Div(children=[dcc.Graph(figure=bars_graph)]),
+                html.Div(
+                    children=[
+                        dcc.Input(placeholder="What is your name?",id="hello-input"),
+                        html.H2(children="Hello anonymous", id="hello-output"),
+                    ]
+                )
 
+            
+            ]
+        )
+    ]
+)
 # map_figure = px.scatter_geo(countries_df)
 # map_figure.show()
+
+@app.callback(
+    Output("hello-output","children"), #id, ouput을 어디로 보낼지 (=return)
+    [
+        Input("hello-input","value") #id, input으로부터 얻고 싶은 것 property
+    ]
+)
+
+def update_hello(value):
+    if value is None:
+        return "Hello Anonymous"
+    else:
+        return f"Hello {value}"
+
 
 if __name__ == '__main__':
     app.run_server(debug=True)
