@@ -1,5 +1,7 @@
 import pandas as pd
 
+conditions=["confirmed","deaths","recovered"]
+
 # read csv file0
 daily_df = pd.read_csv("data/daily_report.csv")
 
@@ -11,6 +13,9 @@ totals_df = totals_df.rename(columns={'index':"condition"})
 # Group by Country name : 나라별 확진자
 countries_df = daily_df[["Country_Region","Confirmed","Deaths","Recovered"]]
 countries_df =countries_df.groupby("Country_Region").sum().sort_values(by="Confirmed",ascending=False).reset_index()
+
+# parsing Country name in data
+dropdown_options = countries_df.sort_values("Country_Region").reset_index()["Country_Region"]
 
 # Daily Cases Globally : 일자별 확진자
 # table of corona data sort by time
