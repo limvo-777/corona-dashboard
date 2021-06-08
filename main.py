@@ -27,7 +27,11 @@ stylesheets = [
     "https://fonts.googleapis.com/css2?family=Open+Sans&display=swap"
 ]
 
+#dash는 flask 서버를 가지고 있음
 app = dash.Dash(__name__, external_stylesheets=stylesheets)
+
+#heroku를 통해서 서버를 노출
+server=app.server
 
 # corona dashboard map
 bubble_map = px.scatter_geo(countries_df,locations="Country_Region",locationmode="country names", 
@@ -153,5 +157,5 @@ def update_hello(value):
     return fig
 
 
-if __name__ == '__main__':
-    app.run_server(debug=True)
+# if __name__ == '__main__':
+#     app.run_server(debug=True)
