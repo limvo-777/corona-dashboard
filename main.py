@@ -1,3 +1,6 @@
+#2021-06-08 corona dashboard
+#https://limvo-corona-dashboard.herokuapp.com/
+
 #dash : python 코드로 react application을 만들어 줌 (interactive)
 import dash
 
