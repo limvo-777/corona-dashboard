@@ -29,7 +29,7 @@ stylesheets = [
 
 #dash는 flask 서버를 가지고 있음
 app = dash.Dash(__name__, external_stylesheets=stylesheets)
-
+app.title="Global Corona Dashboard"
 #heroku를 통해서 서버를 노출
 #dash에서 쓰는 서버는 테스트용(일반서버) -> gunicorn을 통해서 파이썬 app을 위한 서버 생성
 server=app.server
